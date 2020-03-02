@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JSON 2 CSV</title>
+	<style type="text/css">
+		body {
+			display: grid;
+			grid-template-columns: 10% [content-start] 80% [content-end] 10%;
+			background-color: black;
+		}
+
+		.content {
+			grid-column: content;
+			display: grid;
+			grid-template-columns:repeat(4, 23%);
+			grid-gap: 2%;
+		}
+
+		.text {
+			resize: none;
+			height: 450px;
+			width: 100%;
+		}
+
+		.label {
+			color: yellow;
+		}
+
+		.output .label {
+			float: right;
+		}
+
+		.input {
+			grid-column: 1 / 3;
+		}
+
+		.output {
+			grid-column: 3 / 5;
+		}
+
+		.button {
+			margin-top: 15px;
+			font-size: 1em;
+			font-weight: bold;
+			height: 50px;
+			width: 100%;
+			
+		}
+
+		.convert {
+			grid-column: 2 / 3;
+		}
+
+		.clear {
+			grid-column: 3 / 4;
+		}
+
+		.error {
+			grid-column: 1 / 2;
+			color: black;
+			font-size: 1em;
+		}
+	</style>
+	<script type="text/javascript" src="./jquery-3.3.1.js"></script>
+</head>
+<body>
+	<div class="content">
+		<div class="input">
+			<p class="label">JSON</p>
+			<textarea class="text"></textarea>
+			<p class="error">This field does not contain valid JSON</p>
+		</div>
+
+		<div class="output">
+			<p class="label">CSV</p>
+			<textarea class="output text"></textarea>
+		</div>
+		<button class="button convert">CONVERT</button>
+		<button class="button clear">CLEAR</button>
+	</div>
+
+	<script type="text/javascript">
+
+		const json2csv = function(json) {
+			json = json.trim();
+			if(json.startsWith("{")) json = json.substring(1);
+			if(json.endsWith("}")) json = json.substring(0, json.length - 1 );
+
+			if(json == "") {
+				$('.input .error').css("color","white");
+				$('.output .text').val("");
+			}
+			else {
+				$('.input .error').css("color","black");
+			}
+
+			try {
+				JSON.parse(json); 
+			} 
+			catch(err) {
+				$('.input .error').css("color","white");
+				$('.output .text').val("");
+			}
+
+			var arr = JSON.parse(json);
+			
+			var csv = "";
+			for(i=0; i<arr.length ; i++) {
+				if(typeof arr[i] == Array) {
+					for(index = 0; index < arr[i].length; index++) {
+						csv += arr[i][index] ;
+
+						if(index + 1 < arr[i].length) csv += ",";
+					}
+					csv += " \n";
+				}
+				else {
+					csv += arr[i];
+
+					if(i + 1 < arr.length) csv += " \n";
+				}
+			}
+			return csv;
+		}
+
+
+		$('.convert').click(function() {
+			var str = $('.input .text').val();
+			
+			var csv = json2csv(str);
+
+			$('.output .text').val(csv);
+		});
+
+		$('.clear').click(function() {
+			$('.text').val("");
+		});
+
+	</script>
+</body>
+</html>

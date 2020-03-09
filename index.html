@@ -9,17 +9,24 @@
 <body>
 	<div class="content">
 		<div class="input">
-			<p class="label">JSON</p>
+			<p class="label">
+				JSON
+				<span class="error"> - this field does not contain valid JSON</span>
+			</p>
 			<textarea class="text"></textarea>
-			<p class="error">This field does not contain valid JSON</p>
 		</div>
 
 		<div class="output">
 			<p class="label">CSV</p>
 			<textarea class="output text"></textarea>
 		</div>
+		
+		<input type="file" class="read" id="read" />
+		<button class="button open">OPEN</button>
 		<button class="button convert">CONVERT</button>
 		<button class="button clear">CLEAR</button>
+		<button class="button save">SAVE</button>
+		
 	</div>
 
 	<script type="text/javascript" src="js/script.js"></script>

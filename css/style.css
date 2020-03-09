@@ -4,7 +4,6 @@ body {
 	background-color: black;
 }
 
-
 .content {
 	grid-column: content;
 	display: grid;
@@ -16,14 +15,20 @@ body {
 	resize: none;
 	height: 450px;
 	width: 100%;
+	padding: 0;
 }
 
 .label {
 	color: yellow;
 }
 
+.input-label {
+	color: white;
+	font-weight: bold;
+	margin-bottom: 0;
+}
+
 .button {
-	margin-top: 15px;
 	font-size: 1em;
 	font-weight: bold;
 	height: 50px;
@@ -44,9 +49,18 @@ body {
 }
 
 .error {
-	grid-column: 1 / 2;
 	color: black;
 	font-size: 1em;
+}
+
+.read {
+	grid-column: 1 / 2;
+	width: 100%;
+	color: white;
+}
+
+.open {
+	grid-column: 1 / 2;
 }
 
 .convert {

@@ -1,7 +1,5 @@
 const json2csv = function(json) {
 	json = json.trim();
-	if(json.startsWith("{")) json = json.substring(1);
-	if(json.endsWith("}")) json = json.substring(0, json.length - 1 );
 
 	if(json == "") {
 		$('.input .error').css("color","white");
@@ -40,7 +38,6 @@ const json2csv = function(json) {
 	return csv;
 }
 
-
 $('.convert').click(function() {
 	var str = $('.input .text').val();
 			
@@ -51,4 +48,32 @@ $('.convert').click(function() {
 
 $('.clear').click(function() {
 	$('.text').val("");
+});
+
+$('.open').click(function() {
+	var file  = document.getElementById('read').files.item(0);
+
+	if(!file) {
+		return
+	}
+	else {
+		var reader = new FileReader();
+
+		reader.onload = function(e) {
+			$('.input .text').val(e.target.result);
+		}
+
+		reader.readAsText(file);
+	}
+});
+
+$('.save').click(function() {
+	var text = $('.output .text').val();
+	var blob = new Blob([text],{type:'csv'});
+	var anchor = document.createElement('a');
+
+	anchor.download = 'file.csv';
+	anchor.href = (window.webkitURL || window.URL).createObjectURL(blob);
+	anchor.dataset.downloadurl = ['text/plain', anchor.download, anchor.href].join(':');
+	anchor.click();
 });
